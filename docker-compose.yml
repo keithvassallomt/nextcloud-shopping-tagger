@@ -1,0 +1,21 @@
+services:
+  shopping-tagger:
+    build: .
+    image: shopping-tagger:latest
+    # Always rebuild on deploy so Portainer Git redeploys pick up code changes.
+    pull_policy: build
+    container_name: shopping-tagger
+    restart: unless-stopped
+    environment:
+      NEXTCLOUD_URL: ${NEXTCLOUD_URL}
+      NEXTCLOUD_USER: ${NEXTCLOUD_USER}
+      NEXTCLOUD_APP_PASSWORD: ${NEXTCLOUD_APP_PASSWORD}
+      LIST_NAME: ${LIST_NAME:-Shopping}
+      TAGS: ${TAGS}
+      TAGS_SEPARATOR: ${TAGS_SEPARATOR:-,}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-5-mini}
+      PROMPT_HINTS: ${PROMPT_HINTS:-}
+      POLL_INTERVAL: ${POLL_INTERVAL:-60}
+      DRY_RUN: ${DRY_RUN:-false}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
